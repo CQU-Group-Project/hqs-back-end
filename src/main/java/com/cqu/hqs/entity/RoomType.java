@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-//@Data
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class RoomType {
@@ -17,7 +17,7 @@ public class RoomType {
     private String name;
     private String description;
     private int maxOccupancy;
-    private double baseRate;
+    private String amentities;
 
     @OneToOne(mappedBy = "roomType", cascade = CascadeType.ALL)
     private Room room;

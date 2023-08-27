@@ -1,19 +1,15 @@
 package com.cqu.hqs.entity;
 
-import com.cqu.hqs.utils.RoomCleanliness;
-import com.cqu.hqs.utils.RoomStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
-//@Data
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Component
@@ -23,13 +19,9 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private int roomNumber;
-    @Enumerated(EnumType.STRING)
-    private RoomStatus isAvailable;
-
-    @Enumerated(EnumType.STRING)
-    private RoomCleanliness isClean;
-
-    private LocalDateTime lastCleanedDate;
+    private boolean isAvailable;
+    private boolean isClean;
+    private double price;
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
 
