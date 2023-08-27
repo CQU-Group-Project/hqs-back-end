@@ -14,12 +14,11 @@ import java.util.List;
 @RequestMapping("/api/booking")
 public class BookingController {
 
-    private Booking booking;
 
     private SearchBookingDto searchFilter;
 
     private  BookingController(){
-        this.booking=booking;
+
     }
 
     private List<Room> searchRoom(SearchBookingDto searchFilter){

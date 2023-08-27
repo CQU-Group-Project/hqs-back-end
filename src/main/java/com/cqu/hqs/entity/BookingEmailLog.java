@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-//@Data
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class BookingEmailLog {

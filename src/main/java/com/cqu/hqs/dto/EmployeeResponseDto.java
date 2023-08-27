@@ -1,23 +1,11 @@
-package com.cqu.hqs.entity;
+package com.cqu.hqs.dto;
 
-import jakarta.persistence.*;
-import lombok.*;
-import org.springframework.stereotype.Component;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
-
-
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Component
-@Entity
-@Table(name="employee")
-public class Employee {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class EmployeeResponseDto {
     private Long id;
     private String firstName;
     private String lastName;
@@ -34,9 +22,4 @@ public class Employee {
     private String status;
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
-
-    @OneToOne
-    @JoinColumn(name = "user_id", unique = true)
-    private User user;
-
 }

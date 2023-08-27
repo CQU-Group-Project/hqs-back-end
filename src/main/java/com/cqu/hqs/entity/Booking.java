@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-//@Data
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Component
@@ -44,4 +44,23 @@ public class Booking {
     @JoinColumn(name = "booking_id")
     private List<Room> rooms;
 
+
+    @Override
+    public String toString() {
+        return "Booking{" +
+                "id=" + id +
+                ", bookingNumber=" + bookingNumber +
+                ", checkInDate=" + checkInDate +
+                ", checkOutDate=" + checkOutDate +
+                ", totalAmount=" + totalAmount +
+                ", isPaid=" + isPaid +
+                ", paymentDate=" + paymentDate +
+                ", discountPercentage=" + discountPercentage +
+                ", createdDate=" + createdDate +
+                ", updatedDate=" + updatedDate +
+                ", guest=" + guest +
+                ", bookingEmailLog=" + bookingEmailLog +
+                ", rooms=" + rooms +
+                '}';
+    }
 }
