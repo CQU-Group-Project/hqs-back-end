@@ -6,11 +6,9 @@ import com.cqu.hqs.entity.Room;
 import com.cqu.hqs.service.RoomService;
 import com.cqu.hqs.utils.RestResponseDto;
 import com.cqu.hqs.utils.RoomStatus;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,19 +27,9 @@ public class RoomController {
         return RestResponseDto.success(roomService.saveRoom(roomDto));
     }
 
-    private void addRoom(Room room){
+    @GetMapping
+    private ResponseEntity<?> listAllAvailableRoom(){
 
-    }
-
-    private void editRoom(Room room){
-
-    }
-
-    private void changeRoomStatus(RoomStatus roomStatus){
-
-    }
-
-    private List<Room> listAllAvailableRoom(){
-        return null;
+        return RestResponseDto.success(roomService.getAllRooms());
     }
 }

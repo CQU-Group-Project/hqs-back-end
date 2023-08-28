@@ -1,11 +1,14 @@
 package com.cqu.hqs.controller;
 
+import com.cqu.hqs.dto.LoginDto;
+import com.cqu.hqs.dto.UserDto;
 import com.cqu.hqs.entity.Employee;
 import com.cqu.hqs.entity.Guest;
 import com.cqu.hqs.entity.User;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.cqu.hqs.service.UserService;
+import com.cqu.hqs.utils.RestResponseDto;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -13,13 +16,15 @@ import java.util.List;
 @RequestMapping("/api/user")
 public class UserController {
 
-    private User user;
+    private UserService userService;
 
-    public List<User> listAllUser(){
-        return null;
+    public UserController(UserService userService){
+        this.userService=userService;
     }
-    public void login(String email, String password){
 
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginDto loginDto){
+        return RestResponseDto.success(userService.loginUser(loginDto));
     }
     public void logout(Long userId){
 

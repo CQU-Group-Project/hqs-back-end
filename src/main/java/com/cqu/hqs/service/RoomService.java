@@ -4,7 +4,9 @@ import com.cqu.hqs.Exception.BadRequestException;
 import com.cqu.hqs.Repository.RoomRepository;
 import com.cqu.hqs.Repository.RoomTypeRepository;
 import com.cqu.hqs.dto.RoomDto;
+import com.cqu.hqs.dto.RoomResponseDto;
 import com.cqu.hqs.dto.RoomTypeDto;
+import com.cqu.hqs.dto.RoomTypeResponseDto;
 import com.cqu.hqs.entity.Room;
 import com.cqu.hqs.entity.RoomType;
 import jakarta.transaction.Transactional;
@@ -12,6 +14,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class RoomService {
@@ -19,12 +23,14 @@ public class RoomService {
     private ModelMapper mapper;
     private RoomRepository roomRepository;
     private RoomTypeRepository roomTypeRepository;
+    private BookingService bookingService;
 
 
-    public RoomService(RoomRepository roomRepository, RoomTypeRepository roomTypeRepository, ModelMapper mapper) {
+    public RoomService(RoomRepository roomRepository, RoomTypeRepository roomTypeRepository, ModelMapper mapper, BookingService bookingService) {
         this.mapper = mapper;
         this.roomRepository = roomRepository;
         this.roomTypeRepository = roomTypeRepository;
+        this.bookingService = bookingService;
     }
 
     @Transactional
@@ -35,7 +41,7 @@ public class RoomService {
         Room room = mapToEntity(roomDto);
 
         RoomType roomType = roomTypeRepository.findByName(roomDto.getRoomTypeDto().getName());
-        if (null == roomType){
+        if (null == roomType) {
             roomType = mapToRoomTypeEntity(roomDto.getRoomTypeDto());
             roomType = roomTypeRepository.save(roomType);
         }
@@ -71,4 +77,20 @@ public class RoomService {
     }
 
 
+    public List<RoomResponseDto> getAllRooms() {
+        List<Room> rooms = roomRepository.findAll();
+        return rooms.stream().map(room -> mapToResponseDto(room)).collect((Collectors.toList()));
+    }
+
+    private RoomResponseDto mapToResponseDto(Room room) {
+        RoomResponseDto roomResponseDto = mapper.map(room, RoomResponseDto.class);
+//        roomResponseDto.setRoomType(mapToRoomTypeResponseDto(room.getRoomType()));
+//        roomResponseDto.setBooking(bookingService.mapToResponseDto(room.getBooking()));
+        return roomResponseDto;
+    }
+
+//    private RoomTypeResponseDto mapToRoomTypeResponseDto(RoomType roomType) {
+//        RoomTypeResponseDto roomTypeResponseDto = mapper.map(roomType, RoomTypeResponseDto.class);
+//        return roomTypeResponseDto;
+//    }
 }

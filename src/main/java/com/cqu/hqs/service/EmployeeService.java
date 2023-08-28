@@ -14,6 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,7 +50,12 @@ public class EmployeeService {
 
     public List<EmployeeResponseDto> getAllEmployees() {
         List<Employee> employees = employeeRepository.findAll();
-        return employees.stream().map(employee -> mapToResponseDto(employee)).collect((Collectors.toList()));
+        
+        return employees.stream()
+        .sorted(Comparator.comparing(Employee::getCreatedDate)) 
+        .map(employee -> mapToResponseDto(employee))
+        .collect(Collectors.toList());
+//        return employees.stream().map(employee -> mapToResponseDto(employee)).collect((Collectors.toList()));
     }
 
     private EmployeeDto mapToDto(Employee employee) {

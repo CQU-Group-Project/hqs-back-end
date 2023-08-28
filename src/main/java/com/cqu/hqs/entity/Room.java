@@ -25,8 +25,8 @@ public class Room {
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
 
-    @OneToOne
-    @JoinColumn(name = "room_type_id", unique = true)
+    @ManyToOne
+    @JoinColumn(name = "room_type_id")
     private RoomType roomType;
 
     @ManyToOne

@@ -1,13 +1,13 @@
 package com.cqu.hqs.service;
 
+import com.cqu.hqs.Exception.BadRequestException;
 import com.cqu.hqs.Repository.UserRepository;
-import com.cqu.hqs.dto.EmployeeDto;
-import com.cqu.hqs.dto.GuestDto;
-import com.cqu.hqs.dto.UserDto;
-import com.cqu.hqs.dto.UserResponseDto;
+import com.cqu.hqs.dto.*;
 import com.cqu.hqs.entity.Guest;
 import com.cqu.hqs.entity.User;
 import jakarta.transaction.Transactional;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.modelmapper.ModelMapper;
@@ -79,4 +79,16 @@ public class UserService {
         return userResponseDto;
     }
 
+    public UserResponseDto loginUser(LoginDto loginDto) {
+
+        User user=userRepository.findByUsernameAndPassword(loginDto.getUsername(),loginDto.getPassword());
+        if(user==null){
+            throw new BadRequestException("Bad Credentials.");
+        }
+        else{
+            user.setLastLogin(LocalDateTime.now());
+            user=userRepository.save(user);
+            return mapToResponseDto(user);
+        }
+    }
 }
