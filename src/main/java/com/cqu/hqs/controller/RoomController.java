@@ -2,6 +2,7 @@ package com.cqu.hqs.controller;
 
 
 import com.cqu.hqs.dto.RoomDto;
+import com.cqu.hqs.dto.RoomEditDto;
 import com.cqu.hqs.entity.Room;
 import com.cqu.hqs.service.RoomService;
 import com.cqu.hqs.utils.RestResponseDto;
@@ -23,8 +24,13 @@ public class RoomController {
     }
 
     @PostMapping
-    private ResponseEntity<?> RoomController(@RequestBody RoomDto roomDto){
+    private ResponseEntity<?> saveRoom(@RequestBody RoomDto roomDto){
         return RestResponseDto.success(roomService.saveRoom(roomDto));
+    }
+    
+    @PutMapping
+    private ResponseEntity<?> editRoom(@RequestBody RoomEditDto roomEditDto){
+        return RestResponseDto.success(roomService.editRoom(roomEditDto));
     }
 
     @GetMapping
