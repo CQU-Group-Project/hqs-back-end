@@ -110,7 +110,7 @@ public class GuestService {
 
     public GuestResponseDto mapToResponseDto(Guest guest) {
         GuestResponseDto guestResponseDto = mapper.map(guest, GuestResponseDto.class);
-        guestResponseDto.setUser(userService.mapToResponseDto(guest.getUser()));
+//        guestResponseDto.setUser(userService.mapToResponseDto(guest.getUser()));
         guestResponseDto.setBookings(guest.getBookings().stream().map(booking -> bookingService.mapToResponseDto(booking)).collect(Collectors.toList()));
         return guestResponseDto;
     }

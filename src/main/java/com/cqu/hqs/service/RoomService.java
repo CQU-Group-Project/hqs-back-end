@@ -16,8 +16,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.data.domain.Sort;
 
 @Service
 public class RoomService {
@@ -113,7 +115,7 @@ public class RoomService {
     }
 
     public List<RoomResponseDto> getAllRooms() {
-        List<Room> rooms = roomRepository.findAll();
+        List<Room> rooms = roomRepository.findAll(Sort.by(Sort.Direction.DESC, "createdDate"));
         return rooms.stream().map(room -> mapToResponseDto(room)).collect((Collectors.toList()));
     }
 

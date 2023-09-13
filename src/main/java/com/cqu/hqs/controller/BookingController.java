@@ -1,43 +1,45 @@
 package com.cqu.hqs.controller;
 
+import com.cqu.hqs.dto.BookingDto;
+import com.cqu.hqs.dto.EmployeeDto;
 import com.cqu.hqs.dto.SearchBookingDto;
 import com.cqu.hqs.entity.Booking;
 import com.cqu.hqs.entity.Guest;
 import com.cqu.hqs.entity.Room;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.cqu.hqs.service.BookingService;
+import com.cqu.hqs.service.EmployeeService;
+import com.cqu.hqs.utils.RestResponseDto;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
+import org.springframework.http.ResponseEntity;
 
 @RestController
 @RequestMapping("/api/booking")
 public class BookingController {
 
 
-    private SearchBookingDto searchFilter;
+    private BookingService bookingService;
 
-    private  BookingController(){
-
+    public BookingController(BookingService bookingService) {
+        this.bookingService = bookingService;
     }
 
-    private List<Room> searchRoom(SearchBookingDto searchFilter){
-        return null;
+    
+    @PostMapping
+    public ResponseEntity<?> searchRoom(@RequestBody SearchBookingDto searchFilter) {
+        return RestResponseDto.success(bookingService.searchAvailableRoom(searchFilter));
     }
 
-    private void createRoomBooking(Guest guest, List<Room> rooms){
-
+    @PostMapping("/confirm")
+    private ResponseEntity<?> createRoomBooking(@RequestBody BookingDto bookingDto) throws Exception{
+        return RestResponseDto.success(bookingService.confirmBooking(bookingDto));
     }
 
-    private void createEmailLog(Booking booking){
-
+    @GetMapping
+    public ResponseEntity<?> getAllBookings(){
+        return RestResponseDto.success(bookingService.getAllBookings());
     }
 
-    private void confirmBooking(int bookingId){
-
-    }
-
-    private Booking viewBookingReport(int bookingId){
-        return null;
-    }
 }

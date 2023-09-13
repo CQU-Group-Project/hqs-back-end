@@ -2,6 +2,7 @@ package com.cqu.hqs.entity;
 
 import com.cqu.hqs.utils.PaymentStatus;
 import jakarta.persistence.*;
+import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,9 +22,9 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long bookingNumber;
-    private LocalDateTime checkInDate;
-    private LocalDateTime checkOutDate;
+    private String bookingNumber;
+    private LocalDate checkInDate;
+    private LocalDate checkOutDate;
     private double totalAmount;
 
     @Enumerated(EnumType.STRING)

@@ -22,6 +22,7 @@ public class Room {
     private boolean isAvailable;
     private boolean isClean;
     private double price;
+    private String description;
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
 

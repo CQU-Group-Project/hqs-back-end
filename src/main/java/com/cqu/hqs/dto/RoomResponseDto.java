@@ -14,9 +14,9 @@ public class RoomResponseDto {
     private boolean isAvailable;
     private boolean isClean;
     private double price;
+    private String description;
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
-
     private RoomTypeResponseDto roomType;
     private BookingResponseDto booking;
 
