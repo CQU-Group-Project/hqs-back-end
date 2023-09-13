@@ -1,5 +1,6 @@
 package com.cqu.hqs.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.stereotype.Component;
@@ -7,12 +8,12 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 
 
-
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Component
 @Entity
+@Getter
+@Setter
 @Table(name="employee")
 public class Employee {
 
@@ -37,6 +38,7 @@ public class Employee {
 
     @OneToOne
     @JoinColumn(name = "user_id", unique = true)
+    @JsonIgnore
     private User user;
 
 }
