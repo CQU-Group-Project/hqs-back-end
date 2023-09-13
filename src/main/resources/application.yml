@@ -7,9 +7,9 @@ spring:
   application:
     name: Demo Carpetcall Application
   datasource:
-    url: jdbc:mysql://localhost:3306/hqs?allowPublicKeyRetrieval=true
+    url: jdbc:mysql://localhost:3309/hqs?allowPublicKeyRetrieval=true
     username: root
-    password: root
+    password:
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
