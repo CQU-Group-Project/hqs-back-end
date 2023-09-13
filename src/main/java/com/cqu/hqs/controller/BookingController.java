@@ -26,7 +26,7 @@ public class BookingController {
         this.bookingService = bookingService;
     }
 
-
+    
     @PostMapping
     public ResponseEntity<?> searchRoom(@RequestBody SearchBookingDto searchFilter) {
         return RestResponseDto.success(bookingService.searchAvailableRoom(searchFilter));

@@ -9,6 +9,7 @@ public class RoomDto {
     private boolean isAvailable;
     private boolean isClean;
     private double price;
+    private String description;
     private RoomTypeDto roomTypeDto;
 
 }

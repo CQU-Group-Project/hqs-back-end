@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.data.domain.Sort;
 
 @Service
 public class EmployeeService {
@@ -49,13 +50,8 @@ public class EmployeeService {
     }
 
     public List<EmployeeResponseDto> getAllEmployees() {
-        List<Employee> employees = employeeRepository.findAll();
-        
-        return employees.stream()
-        .sorted(Comparator.comparing(Employee::getCreatedDate)) 
-        .map(employee -> mapToResponseDto(employee))
-        .collect(Collectors.toList());
-//        return employees.stream().map(employee -> mapToResponseDto(employee)).collect((Collectors.toList()));
+        List<Employee> employees = employeeRepository.findAll(Sort.by(Sort.Direction.DESC, "createdDate"));
+        return employees.stream().map(employee -> mapToResponseDto(employee)).collect((Collectors.toList()));
     }
 
     private EmployeeDto mapToDto(Employee employee) {
