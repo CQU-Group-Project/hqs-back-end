@@ -1,9 +1,8 @@
 package com.cqu.hqs.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -13,6 +12,8 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class Guest {
 
     @Id
@@ -32,9 +33,9 @@ public class Guest {
 
     @OneToOne
     @JoinColumn(name = "user_id", unique = true)
+    @JsonIgnore
     private User user;
 
     @OneToMany(mappedBy = "guest", cascade = CascadeType.ALL)
     private List<Booking> bookings;
-
 }
