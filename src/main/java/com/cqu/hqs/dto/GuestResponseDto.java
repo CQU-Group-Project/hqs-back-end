@@ -22,6 +22,6 @@ public class GuestResponseDto {
     private String email;
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
-    //    private UserResponseDto user;
+//    private UserResponseDto user;
     private List<BookingResponseDto> bookings;
 }
