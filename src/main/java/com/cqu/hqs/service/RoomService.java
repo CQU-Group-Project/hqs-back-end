@@ -9,6 +9,7 @@ import com.cqu.hqs.dto.RoomEditDto;
 import com.cqu.hqs.dto.RoomResponseDto;
 import com.cqu.hqs.dto.RoomTypeDto;
 import com.cqu.hqs.dto.RoomTypeResponseDto;
+import com.cqu.hqs.entity.Employee;
 import com.cqu.hqs.entity.Room;
 import com.cqu.hqs.entity.RoomType;
 import jakarta.transaction.Transactional;
@@ -38,7 +39,7 @@ public class RoomService {
 
     @Transactional
     public RoomDto saveRoom(RoomDto roomDto) {
-        if (roomRepository.existsByRoomNumber(roomDto.getRoomNumber())) {
+        if (roomRepository.existsByRoomNumberAndStatus(roomDto.getRoomNumber(), "ACTIVE")) {
             throw new BadRequestException("Room already exists with room number " + roomDto.getRoomNumber());
         }
         Room room = mapToEntity(roomDto);
@@ -63,7 +64,7 @@ public class RoomService {
 
         //If new room number has been passed
         if (roomEditDto.getRoomNumber() != 0) {
-            if (roomRepository.existsByRoomNumber(roomEditDto.getRoomNumber())) {
+            if (roomRepository.existsByRoomNumberAndStatus(roomEditDto.getRoomNumber(), "ACTIVE")) {
                 throw new BadRequestException("Room already exists with room number " + roomEditDto.getRoomNumber());
             }
             room.setRoomNumber(roomEditDto.getRoomNumber());
@@ -71,7 +72,7 @@ public class RoomService {
         room.setPrice(roomEditDto.getPrice());
         room.setAvailable(roomEditDto.isAvailable());
         room.setClean(roomEditDto.isClean());
-        
+        room.setDescription(roomEditDto.getDescription());
 
         RoomType roomType = roomTypeRepository.findByName(roomEditDto.getRoomTypeDto().getName());
         if (null == roomType) {
@@ -85,6 +86,19 @@ public class RoomService {
         room = roomRepository.save(room);
 
         return mapToEditDto(room);
+    }
+
+    public String deleteRoomWithId(Long id) {
+        Room room = roomRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Room with id " + id + " not found."));
+        room.setStatus("INACTIVE");
+        room.setUpdatedDate(LocalDateTime.now());
+        roomRepository.save(room);
+        return "Deleted Successfully";
+    }
+    
+        public RoomResponseDto getRoomById(Long id) {
+        Room room = roomRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Room with id " + id + " not found."));
+        return mapToResponseDto(room);
     }
 
     public RoomDto mapToDto(Room room) {
@@ -116,10 +130,10 @@ public class RoomService {
 
     public List<RoomResponseDto> getAllRooms() {
         List<Room> rooms = roomRepository.findAll(Sort.by(Sort.Direction.DESC, "createdDate"));
-        return rooms.stream().map(room -> mapToResponseDto(room)).collect((Collectors.toList()));
+        return rooms.stream().filter(room -> room.getStatus().equals("ACTIVE")).map(room -> mapToResponseDto(room)).collect((Collectors.toList()));
     }
 
-    private RoomResponseDto mapToResponseDto(Room room) {
+    public RoomResponseDto mapToResponseDto(Room room) {
         RoomResponseDto roomResponseDto = mapper.map(room, RoomResponseDto.class);
         return roomResponseDto;
     }

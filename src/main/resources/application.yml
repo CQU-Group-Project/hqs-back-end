@@ -27,3 +27,10 @@ web:
     max-age: 3600
     allowed-headers: "Requestor-Type"
     exposed-headers: "X-Get-Header"
+    
+email:
+  server: "sandbox.smtp.mailtrap.io"
+  port: "587"
+  username: "ac13b118680e16"
+  password: "1cf601df272568"
+

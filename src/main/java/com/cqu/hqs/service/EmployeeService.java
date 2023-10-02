@@ -51,7 +51,7 @@ public class EmployeeService {
 
     public List<EmployeeResponseDto> getAllEmployees() {
         List<Employee> employees = employeeRepository.findAll(Sort.by(Sort.Direction.DESC, "createdDate"));
-        return employees.stream().map(employee -> mapToResponseDto(employee)).collect((Collectors.toList()));
+        return employees.stream().filter(employee -> employee.getStatus().equals("ACTIVE")).map(employee -> mapToResponseDto(employee)).collect((Collectors.toList()));
     }
 
     private EmployeeDto mapToDto(Employee employee) {
@@ -102,6 +102,8 @@ public class EmployeeService {
             employee.setPhone(empEditDto.getPhone());
         if (empEditDto.getPosition() != null)
             employee.setPosition(empEditDto.getPosition());
+         if (empEditDto.getSalary()!=0)
+            employee.setSalary(empEditDto.getSalary());
         if (empEditDto.getHireDate() != null)
             employee.setHireDate(empEditDto.getHireDate());
         if (empEditDto.getStatus() != null)
@@ -109,5 +111,17 @@ public class EmployeeService {
         employee.setUpdatedDate(LocalDateTime.now());
         employee=employeeRepository.save(employee);
         return mapToEditDto(employee);
+    }
+
+    public String deleteEmployeeWithId(Long id) {
+        Employee employee = employeeRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Employee with id " + id + " not found."));
+        employee.setStatus("INACTIVE");
+        employeeRepository.save(employee);
+        return "Deleted Successfully";
+    }
+
+    public EmployeeResponseDto getEmployeeById(Long id) {
+        Employee employee = employeeRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Employee with id " + id + " not found."));
+        return mapToResponseDto(employee);
     }
 }

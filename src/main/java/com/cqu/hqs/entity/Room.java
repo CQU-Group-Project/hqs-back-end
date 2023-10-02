@@ -25,6 +25,7 @@ public class Room {
     private String description;
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
+    private String status="ACTIVE";
 
     @ManyToOne
     @JoinColumn(name = "room_type_id")
