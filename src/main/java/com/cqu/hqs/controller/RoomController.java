@@ -1,6 +1,5 @@
 package com.cqu.hqs.controller;
 
-
 import com.cqu.hqs.dto.RoomDto;
 import com.cqu.hqs.dto.RoomEditDto;
 import com.cqu.hqs.entity.Room;
@@ -19,23 +18,33 @@ public class RoomController {
 
     private RoomService roomService;
 
-    public RoomController(RoomService roomService){
-        this.roomService=roomService;
+    public RoomController(RoomService roomService) {
+        this.roomService = roomService;
     }
 
     @PostMapping
-    private ResponseEntity<?> saveRoom(@RequestBody RoomDto roomDto){
+    private ResponseEntity<?> saveRoom(@RequestBody RoomDto roomDto) {
         return RestResponseDto.success(roomService.saveRoom(roomDto));
     }
     
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getAllRoomWithId(@PathVariable Long id) {
+        return RestResponseDto.success(roomService.getRoomById(id));
+    }
+
     @PutMapping
-    private ResponseEntity<?> editRoom(@RequestBody RoomEditDto roomEditDto){
+    private ResponseEntity<?> editRoom(@RequestBody RoomEditDto roomEditDto) {
         return RestResponseDto.success(roomService.editRoom(roomEditDto));
     }
 
     @GetMapping
-    private ResponseEntity<?> listAllAvailableRoom(){
+    private ResponseEntity<?> listAllAvailableRoom() {
 
         return RestResponseDto.success(roomService.getAllRooms());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteRoom(@PathVariable Long id) {
+        return RestResponseDto.success(roomService.deleteRoomWithId(id));
     }
 }

@@ -41,5 +41,11 @@ public class BookingController {
     public ResponseEntity<?> getAllBookings(){
         return RestResponseDto.success(bookingService.getAllBookings());
     }
+//    
+//    @PostMapping("/emailTest")
+//    public String email(){
+//        bookingService.sendBookingEmail();
+//        return "Email Sent";
+//    }
 
 }

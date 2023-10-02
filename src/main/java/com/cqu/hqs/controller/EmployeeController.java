@@ -21,7 +21,6 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-
     @PostMapping
     public ResponseEntity<?> addEmployee(@RequestBody EmployeeDto employeeDto) {
         return RestResponseDto.success(employeeService.saveEmployee(employeeDto));
@@ -32,9 +31,19 @@ public class EmployeeController {
         return RestResponseDto.success(employeeService.getAllEmployees());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getAllEmployeeById(@PathVariable Long id) {
+        return RestResponseDto.success(employeeService.getEmployeeById(id));
+    }
+
     @PutMapping
     public ResponseEntity<?> editGuest(@RequestBody EmployeeEditDto empEditDto) {
         return RestResponseDto.success(employeeService.editEmployee(empEditDto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteEmployee(@PathVariable Long id) {
+        return RestResponseDto.success(employeeService.deleteEmployeeWithId(id));
     }
 
     public Employee editEmployee(Employee employee) {
